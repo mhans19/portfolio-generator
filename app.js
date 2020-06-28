@@ -1,7 +1,7 @@
-// Local Modules
+    const { writeFile, copyFile } = require('./utils/generate-site.js');
+
     const generatePage = require('./src/page-template');  
 
-// NPA Modules
     const inquirer = require('inquirer');  
 
 // Veryify Module is successfully imported
@@ -19,7 +19,7 @@
                 return true;
                 } else {
                 console.log('Please enter your name!');
-                return false;
+                //return false;
                 }
             }
         },
@@ -29,10 +29,10 @@
             message: 'Enter your GitHub Username (Required)',
             validate: githubInput => {
                 if (githubInput) {
-                return true;
+                    return true;
                 } else {
-                console.log('Please enter your GitHub username!');
-                return false;
+                    console.log('Please enter your GitHub username!');
+                    //return false;
                 }
             }
         },
@@ -69,10 +69,10 @@
             message: 'What is the name of your project? (Required)',
             validate: projectNameInput => {
                 if (projectNameInput) {
-                return true;
+                    return true;
                 } else {
                 console.log('Please enter your project name!');
-                return false;
+                    //return false;
                 }
             }
         },
@@ -82,10 +82,10 @@
             message: 'Provide a description of the project (Required)',
             validate: descriptionInput => {
                 if (descriptionInput) {
-                return true;
+                    return true;
                 } else {
                 console.log('Please enter your project description!');
-                return false;
+                   // return false;
                 }
             }
         },
@@ -101,10 +101,10 @@
             message: 'Enter the GitHub link to your project. (Required)',
             validate: githubLinkInput => {
                 if (githubLinkInput) {
-                return true;
+                    return true;
                 } else {
                 console.log('Please enter your project GitHub link!');
-                return false;
+                    //return false;
                 }
             }
         },
@@ -136,8 +136,16 @@
     .then(portfolioData => {
         return generatePage(portfolioData);
     })
-    fs.writeFile('./index.html', pageHTML, err => {
-      if (err) throw new Error(err);
-
-      console.log('Page created! Check out index.html in this directory to see it!');
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
     });
